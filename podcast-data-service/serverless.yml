@@ -1,0 +1,55 @@
+org: arifaulakh
+app: backend
+service: backend
+
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-1
+  environment:
+    PODCAST_AUDIO_S3_BUCKET_NAME: ${env:PODCAST_AUDIO_S3_BUCKET_NAME}
+    PODCAST_TRANSCRIPTS_S3_BUCKET_NAME: ${env:PODCAST_TRANSCRIPTS_S3_BUCKET_NAME}
+    PODCAST_API_KEY: ${env:PODCAST_API_KEY}
+    DEEPGRAM_API_KEY: ${env:DEEPGRAM_API_KEY}
+
+functions:
+  fetchPodcastData:
+    handler: src/fetch-podcast-data/handler.handler
+    # environment:
+    #   LISTEN_NOTES_API_KEY: ${env:API_KEY}
+    events:
+      - http:
+          path: process-podcast
+          method: post
+          
+  transcribeAudio:
+    handler: src/transcribe-audio/handler.handler
+    events:
+      - http:
+          path: transcribe-audio
+          method: post
+  
+  transcriptUpload:
+    handler: src/transcript-upload/handler.handler
+
+plugins:
+  - serverless-plugin-typescript
+custom:
+  package:
+    individually: true
+    excludeDevDependencies: true
+    exclude:
+      - ./**
+    include:
+      - node_modules/**
+      - package.json
+      - yarn.lock
+
+resources:
+  Resources:
+    AudioBucket:
+      Type: 'AWS::S3::Bucket'
+      Properties:
+        BucketName: podcast-audio-bucket

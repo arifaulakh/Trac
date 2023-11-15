@@ -1,0 +1,31 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend services for podcast interaction service",
+  "main": "index.js",
+  "author": "Arif Aulakh",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "deploy": "sls deploy",
+    "start": "yarn start"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.126",
+    "serverless-plugin-typescript": "^2.1.5",
+    "serverless-python-requirements": "^6.0.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@aws-sdk/types": "^3.449.0",
+    "@types/node": "^20.9.0",
+    "assemblyai": "^3.0.1",
+    "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1494.0",
+    "axios": "^1.6.1",
+    "follow-redirects": "^1.15.3",
+    "node-fetch": "^3.3.2",
+    "podcast-api": "^2.0.4",
+    "serverless-event-body-option": "^1.2.0"
+  }
+}
