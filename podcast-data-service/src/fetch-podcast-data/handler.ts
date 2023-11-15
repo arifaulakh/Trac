@@ -1,12 +1,18 @@
-import { APIGatewayProxyHandler, APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { Client } from 'podcast-api';
+import {
+  APIGatewayProxyHandler,
+  APIGatewayProxyEvent,
+  APIGatewayProxyResult,
+} from "aws-lambda";
+import { Client } from "podcast-api";
 
-export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const handler: APIGatewayProxyHandler = async (
+  event: APIGatewayProxyEvent,
+): Promise<APIGatewayProxyResult> => {
   try {
     const requestBody = event.body;
-    const parsedBody = JSON.parse(requestBody || '');
+    const parsedBody = JSON.parse(requestBody || "");
     const episodeId = parsedBody?.episodeId;
-    console.log('Episode ID: ', episodeId)
+    console.log("Episode ID: ", episodeId);
 
     const client = Client({ apiKey: process.env.PODCAST_API_KEY });
 
@@ -22,9 +28,9 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
     const responseBody = {
       statusCode: 200,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({audioUrl: audioUrl}),
+      body: JSON.stringify({ audioUrl: audioUrl }),
     };
     return responseBody;
   } catch (err: unknown) {
@@ -33,18 +39,18 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
       return {
         statusCode: 500,
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ error: err.message }),
       };
     } else {
-      console.error('An error occurred');
+      console.error("An error occurred");
       return {
         statusCode: 500,
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ error: 'An error occurred' }),
+        body: JSON.stringify({ error: "An error occurred" }),
       };
     }
   }

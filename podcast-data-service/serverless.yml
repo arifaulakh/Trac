@@ -23,14 +23,14 @@ functions:
       - http:
           path: process-podcast
           method: post
-          
+
   transcribeAudio:
     handler: src/transcribe-audio/handler.handler
     events:
       - http:
           path: transcribe-audio
           method: post
-  
+
   transcriptUpload:
     handler: src/transcript-upload/handler.handler
 
@@ -50,6 +50,6 @@ custom:
 resources:
   Resources:
     AudioBucket:
-      Type: 'AWS::S3::Bucket'
+      Type: "AWS::S3::Bucket"
       Properties:
         BucketName: podcast-audio-bucket

@@ -1,1 +1,1 @@
-declare module 'podcast-api';
+declare module "podcast-api";
